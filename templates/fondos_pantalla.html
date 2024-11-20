@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondos de Pantalla Personalizados</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fondos.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Fondos de Pantalla Personalizados</h1>
+    <div class="wallpaper-grid">
+
+        <div class="wallpaper-grid">
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 2.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 3.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 4.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 5.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 6.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 7.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 8.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 9.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 10.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 11.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 12.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 13.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 14.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <div class="wallpaper-item">
+                <img src="{{ url_for('static', filename='image/fondos/fondo 15.jpg') }}"
+                     alt="Fondo de pantalla 1"
+                     onclick="setWallpaper(this.src)">
+            </div>
+
+            <button class="back-button" onclick="window.history.back()">Regresar</button>
+        </div>
+
+
+        <script>
+            function setWallpaper(imageUrl) {
+                // Guardar la URL de la imagen en localStorage
+                localStorage.setItem('backgroundImage', imageUrl);
+
+                // Opcional: Mostrar una confirmación
+                alert('Fondo de pantalla actualizado');
+
+                // Regresar a la página principal
+                window.location.href = '/principal';
+            }
+        </script>
+</body>
+</html>

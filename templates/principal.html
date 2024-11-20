@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar tablas</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/principal.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tabla.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/invitacion.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/reloj.js') }}" defer></script>
+</head>
+
+<body>
+<nav class="navbar">
+    <div class="navbar-container">
+        <!-- Botón para el menú en dispositivos móviles -->
+        <button id="menu-toggle" class="menu-toggle">
+            ☰
+        </button>
+
+        <!-- Formulario de búsqueda -->
+        <form id="search-form" class="search-form">
+            <input type="text" id="search-input" class="search-input" placeholder="Buscar personas o proyectos...">
+        </form>
+
+        <section>
+            <div class="navbar-icons">
+                <span id="current-time" class="current-time">12:00 PM</span>
+
+                <div class="dropdown">
+                    <button class="icon-button">
+                        <img src="{{ url_for('static', filename='image/configuraciones.png') }}" alt="Ajustes">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="{{ url_for('fondos_pantalla') }}" class="dropdown-item">Cambiar Fondo</a>
+                        <a href="/perfil" class="dropdown-item">Ver Perfil</a>
+                        <a href="/notificaciones" class="dropdown-item">Notificaciones</a>
+                        <a href="/logout" class="dropdown-item">Cerrar Sesión</a>
+                    </div>
+                </div>
+
+                <button class="user-avatar">
+                    <a href="{{ url_for('perfil') }}"><img id="navbar-avatar" src="{{ url_for('static', filename='image/ajuste.png') }}" alt="User Avatar">
+                        <a/>
+                </button>
+            </div>
+        </section>
+        <!-- Menú Lateral -->
+        <section>
+            <div id="side-menu" class="side-menu">
+                <button id="close-btn" class="close-btn">×</button>
+                <a href="{{ url_for('index') }}"  class="dropdown-item" >Inicio</a>
+               <!-- <a href="/modo-solitario" class="dropdown-item">Mensajes</a> -->
+                <!--<a href="/modo-presentacion" class="side-menu-item">Colaboradores</a>-->
+                <a href="{{ url_for ('calendario') }}" target="_blank" class="dropdown-item">Calendario</a>
+                <!--<a href="/gestion-riesgos" class="side-menu-item">Gestión de Riesgos</a> -->
+                <a href="#" id="openInviteModal" class="dropdown-item">Invitar</a>
+                <div class="modal-container" id="inviteModal">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Invitar Usuarios</h2>
+                            <p class="card-description">Invita a nuevos miembros a tu proyecto</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="input-group">
+                                <label class="label" for="email">Correo Electrónico</label>
+                                <div class="input-wrapper">
+                                    <input
+                                            type="email"
+                                            id="email"
+                                            class="input"
+                                            placeholder="usuario@ejemplo.com"
+                                    >
+                                    <button class="button" onclick="handleInvite()">
+                                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                        Invitar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="label">Enlace de Invitación</label>
+                                <div class="link-container">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                                        <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                                    </svg>
+                                    <span class="link-text" id="inviteLink">https://tuapp.com/invitar/abc123</span>
+                                    <button class="icon-button" onclick="copyLink()" id="copyButton">
+                                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('fondos_pantalla') }}" class="dropdown-item">Cambiar Fondo</a>
+                <a href="#" onclick="removeWallpaper()" class="dropdown-item">Quitar Fondo</a>
+                <a href="" class="dropdown-item">Cerrar Sesion</a>
+            </div>
+        </section>
+    </div>
+</nav>
+
+<br><br><br><br>
+
+<div class="container">
+    <div class="header">
+        <h1 class="title">Mis tareas ★</h1>
+        <a href="{{ url_for('kanban') }}">
+            <button class="create-btn">CREAR NUEVO PROYECTO</button>
+        </a>
+    </div>
+</div>
+<br>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th data-column="name">Nombre</th>
+            <th data-column="name"> Descripcion</th>
+            <th data-column="status">Estado</th>
+            <th data-column="startDate">Fecha de Inicio</th>
+            <th data-column="priority">Prioridad</th>
+        </tr>
+        </thead>
+        <tbody id="projectsTableBody">
+        <tr>
+            <td>Proyecto Kanban</td>
+            <td>Proyecto basado en un tablero kanban con funcionalidad de tareas.</td>
+            <td><span class="status status-progress">En progreso</span></td>
+            <td>2023-05-15</td>
+            <td><span class="priority priority-high">Alta</span></td>
+        </tr>
+        <tr>
+            <td>Proyecto Farmafriends.</td>
+            <td>Proyecto Basado en un ejemplo de Farmacia</td>
+            <td><span class="status status-completed">Completado</span></td>
+            <td>2023-04-01</td>
+            <td><span class="priority priority-medium">Media</span></td>
+        </tr>
+        <tr>
+            <td>Proyecto Estancias</td>
+            <td>Proyecto de Estancias y  Estadias.</td>
+            <td><span class="status status-pending">Pendiente</span></td>
+            <td>2023-06-10</td>
+            <td><span class="priority priority-low">Baja</span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Sincronización del avatar en el navbar
+    document.addEventListener("DOMContentLoaded", () => {
+        const navbarAvatar = document.getElementById("navbar-avatar");
+
+        // Cargar la imagen guardada en localStorage
+        const savedImage = localStorage.getItem("profileImage");
+        if (savedImage) {
+            navbarAvatar.src = savedImage;
+        }
+
+        // Sincronizar con el cambio del perfil (si es dinámico)
+        document.addEventListener("profileImageChanged", (event) => {
+            const newImage = event.detail.newImage;
+            navbarAvatar.src = newImage;
+        });
+    });
+</script>
+
+<script>
+    // Variables
+    const modal = document.getElementById('inviteModal');
+    const openInviteModal = document.getElementById('openInviteModal');
+    const emailInput = document.getElementById('email');
+    const copyButton = document.getElementById('copyButton');
+    const inviteLink = 'https://tuapp.com/invitar/abc123';
+
+    // Abrir modal desde el menú
+    openInviteModal.addEventListener('click', (e) => {
+        e.preventDefault(); // Evita la redirección
+        modal.classList.add('active');
+    });
+
+    // Cerrar modal al hacer clic fuera
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+
+    // Manejar invitación
+    function handleInvite() {
+        const email = emailInput.value;
+        if (email) {
+            console.log('Invitación enviada a:', email);
+            emailInput.value = '';
+            // Aquí irían las llamadas a tu backend
+        }
+    }
+
+    // Copiar enlace
+    function copyLink() {
+        navigator.clipboard.writeText(inviteLink);
+        const originalIcon = copyButton.innerHTML;
+
+        // Cambiar al ícono de check
+        copyButton.innerHTML = `
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        `;
+
+        // Volver al ícono original después de 2 segundos
+        setTimeout(() => {
+            copyButton.innerHTML = originalIcon;
+        }, 2000);
+    }
+</script>
+<script>
+    // Variables
+    const menuToggle = document.getElementById('menu-toggle');
+    const sideMenu = document.getElementById('side-menu');
+    const closeBtn = document.getElementById('close-btn');
+
+    // Abrir menú lateral
+    menuToggle.addEventListener('click', () => {
+        sideMenu.classList.add('active');
+    });
+
+    // Cerrar menú lateral
+    closeBtn.addEventListener('click', () => {
+        sideMenu.classList.remove('active');
+    });
+</script>
+
+<script>
+    // Función para mostrar/ocultar el menú desplegable
+    function toggleDropdown() {
+        document.getElementById('createDropdown').classList.toggle('show');
+    }
+
+    // Cierra el dropdown si se hace clic fuera de él
+    window.onclick = function(event) {
+        if (!event.target.matches('.create-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Recuperar la imagen guardada en localStorage
+        const savedBackground = localStorage.getItem('backgroundImage');
+        if (savedBackground) {
+            // Aplicar el fondo a todo el body
+            document.body.style.backgroundImage = `url('${savedBackground}')`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
+        }
+    });
+</script>
+
+<script>
+    function removeWallpaper() {
+        localStorage.removeItem('backgroundImage');
+        document.body.style.backgroundImage = 'none';
+        // Opcional: Mostrar confirmación
+        alert('Fondo de pantalla removido');
+    }
+</script>
+</body>
+</html>
