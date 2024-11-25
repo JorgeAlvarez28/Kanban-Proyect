@@ -17,6 +17,10 @@ db_config = {
 def index():
     return render_template("index.html")
 
+@app.route('/indexjorge')
+def indexjorge():
+    return render_template("indexjorge.html")
+
 
 @app.route('/InicioSesion')
 def InicioSesion():
