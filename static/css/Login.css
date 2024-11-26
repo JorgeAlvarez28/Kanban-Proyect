@@ -99,7 +99,7 @@ body {
     padding: 0.5rem;
     border: 1px solid #ffffff;
     border-radius: 0.25rem;
-    color: white;
+    color: black;
 }
 .checkbox-group {
     display: flex;
